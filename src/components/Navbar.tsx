@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
+  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
@@ -23,75 +24,72 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/90 backdrop-blur-lg shadow-soft border-b border-border"
+          ? "bg-background/90 backdrop-blur-md border-b border-border"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="font-display font-bold text-xl md:text-2xl">
-            <span className={isScrolled ? "text-foreground" : "text-secondary-foreground"}>
-              Nicolette
-            </span>
-            <span className="text-primary">.</span>
+          <a href="#" className="font-display font-bold text-xl md:text-2xl text-foreground">
+            NM<span className="text-primary">.</span>
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isScrolled ? "text-foreground" : "text-secondary-foreground/80"
-                }`}
+                className="px-4 py-2 text-sm font-mono text-muted-foreground hover:text-primary transition-colors"
               >
                 {link.label}
               </a>
             ))}
-            <Button variant={isScrolled ? "default" : "hero"} size="sm" asChild>
+          </div>
+
+          {/* CTA Button */}
+          <div className="hidden md:block">
+            <Button variant="hero" size="sm" asChild>
               <a href="mailto:nene171408@gmail.com">Hire Me</a>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? (
-              <X className={`w-6 h-6 ${isScrolled ? "text-foreground" : "text-secondary-foreground"}`} />
-            ) : (
-              <Menu className={`w-6 h-6 ${isScrolled ? "text-foreground" : "text-secondary-foreground"}`} />
-            )}
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border bg-background">
-            <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-foreground hover:text-primary transition-colors px-4 py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
-              <div className="px-4 pt-2">
-                <Button variant="default" className="w-full" asChild>
-                  <a href="mailto:nene171408@gmail.com">Hire Me</a>
-                </Button>
-              </div>
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ${
+            isMobileMenuOpen ? "max-h-96 pb-6" : "max-h-0"
+          }`}
+        >
+          <div className="flex flex-col gap-1 pt-4 border-t border-border">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="px-4 py-3 text-sm font-mono text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="px-4 pt-4">
+              <Button variant="hero" className="w-full" asChild>
+                <a href="mailto:nene171408@gmail.com">Hire Me</a>
+              </Button>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );
