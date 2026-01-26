@@ -1,158 +1,163 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  Globe, 
-  Smartphone, 
-  Cloud, 
-  Brain, 
-  Database, 
-  Code2,
-  ArrowRight
-} from "lucide-react";
+import { ArrowUpRight, Globe, Smartphone, Cloud, Brain, Database, Users } from "lucide-react";
+import { useState } from "react";
 
 const services = [
   {
+    id: "01",
     icon: Globe,
     title: "Full-Stack Web Development",
     description: "Modern, responsive web applications built with React, Next.js, Node.js, and .NET Core. From MVPs to enterprise solutions.",
-    technologies: ["React", "Next.js", "Node.js", "TypeScript", ".NET Core"],
-    priceZAR: "From R3,500",
-    priceUSD: "From $190",
-    popular: true,
+    technologies: ["React", "Next.js", "Node.js", ".NET Core", "TypeScript"],
+    priceZAR: "R3,500",
+    priceUSD: "$190",
   },
   {
+    id: "02",
     icon: Smartphone,
     title: "Mobile App Development",
-    description: "Cross-platform mobile applications using Flutter and React Native. iOS and Android from a single codebase.",
+    description: "Cross-platform mobile applications using Flutter and React Native. iOS and Android from a single codebase with native performance.",
     technologies: ["Flutter", "React Native", "Dart", "Firebase"],
-    priceZAR: "From R5,000",
-    priceUSD: "From $270",
-    popular: false,
+    priceZAR: "R5,000",
+    priceUSD: "$270",
   },
   {
+    id: "03",
     icon: Cloud,
     title: "Cloud Solutions & Azure",
     description: "Cloud architecture, deployment, and DevOps. Azure App Service, Functions, CI/CD pipelines, and infrastructure as code.",
     technologies: ["Azure", "Docker", "Terraform", "CI/CD"],
-    priceZAR: "From R2,500",
-    priceUSD: "From $135",
-    popular: false,
+    priceZAR: "R2,500",
+    priceUSD: "$135",
   },
   {
+    id: "04",
     icon: Brain,
     title: "AI & Machine Learning",
-    description: "AI integration, prompt engineering, and NLP solutions. OpenAI API integration and custom model training.",
+    description: "AI integration, prompt engineering, and NLP solutions. OpenAI API integration and custom model optimization.",
     technologies: ["OpenAI", "TensorFlow", "NLP", "Python"],
-    priceZAR: "From R4,000",
-    priceUSD: "From $215",
-    popular: false,
+    priceZAR: "R4,000",
+    priceUSD: "$215",
   },
   {
+    id: "05",
     icon: Database,
     title: "API Development",
-    description: "RESTful and GraphQL APIs with robust authentication, documentation, and scalable architecture.",
+    description: "RESTful and GraphQL APIs with robust authentication, comprehensive documentation, and scalable architecture.",
     technologies: ["REST", "GraphQL", "PostgreSQL", "MongoDB"],
-    priceZAR: "From R2,000",
-    priceUSD: "From $110",
-    popular: false,
+    priceZAR: "R2,000",
+    priceUSD: "$110",
   },
   {
-    icon: Code2,
+    id: "06",
+    icon: Users,
     title: "Technical Training",
     description: "One-on-one or group training in web development, mobile apps, and modern programming practices.",
-    technologies: ["HTML/CSS", "JavaScript", "React", "Git"],
-    priceZAR: "From R800/hr",
-    priceUSD: "From $45/hr",
-    popular: false,
+    technologies: ["Mentorship", "Code Review", "Best Practices"],
+    priceZAR: "R800/hr",
+    priceUSD: "$45/hr",
   },
 ];
 
 const Services = () => {
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
   return (
-    <section id="services" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <Badge variant="outline" className="mb-4 px-4 py-1 text-sm font-medium">
-            Services
-          </Badge>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            What I Can <span className="text-gradient">Build For You</span>
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            From concept to deployment, I deliver high-quality, scalable solutions tailored to your needs. 
-            All prices are negotiable based on project scope.
+    <section id="services" className="py-32 bg-secondary/30 relative">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-dots opacity-30" />
+      
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-px bg-primary" />
+              <span className="text-xs font-mono uppercase tracking-[0.3em] text-primary">
+                Services
+              </span>
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold">
+              What I Can
+              <br />
+              <span className="text-gradient">Build For You</span>
+            </h2>
+          </div>
+          <p className="text-muted-foreground max-w-md md:text-right">
+            From concept to deployment, I deliver high-quality, scalable solutions. 
+            All prices are starting rates and negotiable based on project scope.
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <Card 
-              key={service.title}
-              className={`group relative overflow-hidden transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 ${
-                service.popular ? "border-primary shadow-glow" : "border-border"
-              }`}
-              style={{ animationDelay: `${index * 0.1}s` }}
+        {/* Services list */}
+        <div className="space-y-2">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="group relative"
+              onMouseEnter={() => setHoveredId(service.id)}
+              onMouseLeave={() => setHoveredId(null)}
             >
-              {service.popular && (
-                <div className="absolute top-4 right-4">
-                  <Badge className="bg-primary text-primary-foreground">Popular</Badge>
-                </div>
-              )}
-              
-              <CardHeader className="pb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-accent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <service.icon className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <CardTitle className="font-display text-xl">{service.title}</CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  {service.description}
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                <div className="flex flex-wrap gap-2">
-                  {service.technologies.map((tech) => (
-                    <Badge key={tech} variant="secondary" className="text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
+              <a
+                href="#contact"
+                className="block p-6 md:p-8 bg-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden"
+              >
+                {/* Hover background */}
+                <div className={`absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-transparent transition-opacity duration-500 ${hoveredId === service.id ? 'opacity-100' : 'opacity-0'}`} />
                 
-                <div className="pt-4 border-t border-border">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-lg font-display font-semibold text-foreground">
-                        {service.priceZAR}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {service.priceUSD}
-                      </p>
-                    </div>
-                    <Button variant="ghost" size="sm" className="group/btn" asChild>
-                      <a href="#contact">
-                        Inquire
-                        <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
+                  {/* Number & Icon */}
+                  <div className="flex items-center gap-4 md:w-24">
+                    <span className="text-sm font-mono text-muted-foreground">{service.id}</span>
+                    <service.icon className={`w-6 h-6 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-muted-foreground'}`} />
                   </div>
+
+                  {/* Title & Description */}
+                  <div className="flex-1">
+                    <h3 className={`font-display text-xl md:text-2xl font-semibold mb-2 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-foreground'}`}>
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2 md:line-clamp-1 max-w-2xl">
+                      {service.description}
+                    </p>
+                  </div>
+
+                  {/* Technologies - hidden on mobile */}
+                  <div className="hidden lg:flex flex-wrap gap-2 max-w-xs">
+                    {service.technologies.slice(0, 3).map((tech) => (
+                      <span key={tech} className="text-xs font-mono text-muted-foreground">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Price */}
+                  <div className="md:text-right md:min-w-[140px]">
+                    <p className="font-display font-bold text-lg text-foreground">
+                      From {service.priceZAR}
+                    </p>
+                    <p className="text-xs text-muted-foreground font-mono">
+                      ≈ {service.priceUSD}
+                    </p>
+                  </div>
+
+                  {/* Arrow */}
+                  <ArrowUpRight className={`w-6 h-6 transition-all duration-300 ${hoveredId === service.id ? 'text-primary translate-x-1 -translate-y-1' : 'text-muted-foreground'}`} />
                 </div>
-              </CardContent>
-            </Card>
+              </a>
+            </div>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-16">
-          <p className="text-muted-foreground mb-4">
-            Need something custom? Let's discuss your project requirements.
+        <div className="mt-16 text-center">
+          <p className="text-muted-foreground mb-6 font-mono text-sm">
+            Need something custom? Let's discuss your requirements.
           </p>
           <Button variant="hero" size="lg" asChild>
             <a href="#contact">
               Get a Custom Quote
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <ArrowUpRight className="w-5 h-5" />
             </a>
           </Button>
         </div>
