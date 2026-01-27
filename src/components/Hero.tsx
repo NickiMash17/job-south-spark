@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, ArrowDown, Code2, Sparkles } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowDown, Code2, Sparkles, Download } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Hero = () => {
@@ -102,6 +102,12 @@ const Hero = () => {
               </a>
             </Button>
             <Button variant="heroOutline" size="lg" asChild>
+              <a href="/Nicolette-Mashaba-CV.pdf" download="Nicolette-Mashaba-CV.pdf">
+                <Download className="w-5 h-5" />
+                Download CV
+              </a>
+            </Button>
+            <Button variant="minimal" size="lg" asChild>
               <a href="#contact">
                 Let's Talk
               </a>
