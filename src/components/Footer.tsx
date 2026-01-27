@@ -9,9 +9,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-12 bg-card border-t border-border relative">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+    <footer className="py-8 sm:py-12 bg-card border-t border-border relative">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex flex-col gap-6 sm:gap-8 md:flex-row md:items-center md:justify-between">
           {/* Logo & Copyright */}
           <motion.div 
             className="text-center md:text-left"
@@ -20,7 +20,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <a href="#" className="font-display font-bold text-2xl text-foreground inline-block mb-2">
+            <a href="#" className="font-display font-bold text-xl sm:text-2xl text-foreground inline-block mb-1 sm:mb-2">
               NM<span className="text-primary">.</span>
             </a>
             <p className="text-xs font-mono text-muted-foreground">
@@ -30,7 +30,7 @@ const Footer = () => {
 
           {/* Quick links */}
           <motion.div 
-            className="flex items-center gap-6"
+            className="flex items-center justify-center gap-4 sm:gap-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -49,7 +49,7 @@ const Footer = () => {
 
           {/* Social Links & Back to top */}
           <motion.div 
-            className="flex items-center gap-4"
+            className="flex items-center justify-center gap-3 sm:gap-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -60,7 +60,7 @@ const Footer = () => {
                 href="https://github.com/NickiMash17"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 border border-border hover:border-primary hover:text-primary transition-all"
+                className="p-2.5 sm:p-3 border border-border hover:border-primary hover:text-primary transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -70,7 +70,7 @@ const Footer = () => {
                 href="https://linkedin.com/in/nicolette-mashaba"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 border border-border hover:border-primary hover:text-primary transition-all"
+                className="p-2.5 sm:p-3 border border-border hover:border-primary hover:text-primary transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -78,7 +78,7 @@ const Footer = () => {
               </motion.a>
               <motion.a
                 href="mailto:nene171408@gmail.com"
-                className="p-3 border border-border hover:border-primary hover:text-primary transition-all"
+                className="p-2.5 sm:p-3 border border-border hover:border-primary hover:text-primary transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -86,11 +86,11 @@ const Footer = () => {
               </motion.a>
             </div>
 
-            <div className="w-px h-8 bg-border" />
+            <div className="w-px h-6 sm:h-8 bg-border" />
 
             <motion.button
               onClick={scrollToTop}
-              className="p-3 border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+              className="p-2.5 sm:p-3 border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all"
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >

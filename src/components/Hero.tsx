@@ -9,29 +9,29 @@ const Hero = () => {
       <div className="absolute inset-0 bg-grid opacity-50" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
       
-      {/* Floating geometric shapes */}
+      {/* Floating geometric shapes - hidden on small mobile */}
       <motion.div 
-        className="absolute top-20 right-[15%] w-32 h-32 border border-primary/20 rotate-45"
+        className="absolute top-20 right-[15%] w-16 h-16 md:w-32 md:h-32 border border-primary/20 rotate-45 hidden sm:block"
         animate={{ y: [0, -20, 0], rotate: [45, 50, 45] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
-        className="absolute top-40 right-[10%] w-16 h-16 border border-primary/30 rotate-12"
+        className="absolute top-40 right-[10%] w-12 h-12 md:w-16 md:h-16 border border-primary/30 rotate-12 hidden sm:block"
         animate={{ y: [0, 15, 0], rotate: [12, 18, 12] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       />
       <motion.div 
-        className="absolute bottom-40 left-[10%] w-24 h-24 border border-accent/20 -rotate-12"
+        className="absolute bottom-40 left-[10%] w-16 h-16 md:w-24 md:h-24 border border-accent/20 -rotate-12 hidden md:block"
         animate={{ y: [0, -15, 0], rotate: [-12, -18, -12] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
-      <div className="absolute top-1/3 left-[5%] w-2 h-2 bg-primary rounded-full animate-pulse-slow" />
-      <div className="absolute top-1/2 right-[20%] w-2 h-2 bg-accent rounded-full animate-pulse-slow delay-200" />
+      <div className="absolute top-1/3 left-[5%] w-2 h-2 bg-primary rounded-full animate-pulse-slow hidden sm:block" />
+      <div className="absolute top-1/2 right-[20%] w-2 h-2 bg-accent rounded-full animate-pulse-slow delay-200 hidden sm:block" />
       
       {/* Large gradient orb */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-primary/5 via-transparent to-transparent blur-3xl" />
 
-      <div className="container relative z-10 mx-auto px-6 pt-32 pb-20 lg:pt-40">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 sm:pb-20 lg:pt-40">
         <div className="max-w-5xl">
           {/* Status badge */}
           <motion.div 
@@ -48,7 +48,7 @@ const Hero = () => {
 
           {/* Main heading */}
           <motion.h1 
-            className="font-display text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold leading-[0.9] mb-8"
+            className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold leading-[0.9] mb-6 sm:mb-8"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
@@ -60,54 +60,52 @@ const Hero = () => {
 
           {/* Description with asymmetric layout */}
           <motion.div 
-            className="grid md:grid-cols-2 gap-8 mb-12"
+            className="flex flex-col gap-6 sm:gap-8 mb-8 sm:mb-12"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
           >
             <div>
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
                 Full-Stack Developer & Azure Certified engineer crafting 
                 production-ready applications with modern technologies.
               </p>
             </div>
-            <div className="flex items-end">
-              <div className="flex flex-wrap gap-3">
-                {["React", "Flutter", ".NET", "AI/ML", "Azure"].map((tech, i) => (
-                  <motion.span
-                    key={tech}
-                    className="px-3 py-1.5 text-xs font-mono border border-border hover:border-primary hover:text-primary transition-colors cursor-default"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-                  >
-                    {tech}
-                  </motion.span>
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              {["React", "Flutter", ".NET", "AI/ML", "Azure"].map((tech, i) => (
+                <motion.span
+                  key={tech}
+                  className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border border-border hover:border-primary hover:text-primary transition-colors cursor-default"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+                >
+                  {tech}
+                </motion.span>
+              ))}
             </div>
           </motion.div>
 
           {/* CTA Buttons */}
           <motion.div 
-            className="flex flex-wrap gap-4 mb-16"
+            className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-10 sm:mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <Button variant="hero" size="lg" asChild>
+            <Button variant="hero" size="lg" className="w-full sm:w-auto" asChild>
               <a href="#services">
                 <Sparkles className="w-5 h-5" />
                 View Services
               </a>
             </Button>
-            <Button variant="heroOutline" size="lg" asChild>
+            <Button variant="heroOutline" size="lg" className="w-full sm:w-auto" asChild>
               <a href="/Nicolette-Mashaba-CV.pdf" download="Nicolette-Mashaba-CV.pdf">
                 <Download className="w-5 h-5" />
                 Download CV
               </a>
             </Button>
-            <Button variant="minimal" size="lg" asChild>
+            <Button variant="minimal" size="lg" className="w-full sm:w-auto" asChild>
               <a href="#contact">
                 Let's Talk
               </a>

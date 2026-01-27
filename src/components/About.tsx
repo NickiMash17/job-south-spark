@@ -11,12 +11,12 @@ const stats = [
 
 const About = () => {
   return (
-    <section id="about" className="py-32 bg-background relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-24 lg:py-32 bg-background relative overflow-hidden">
       {/* Background accent */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent" />
       
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left column - Text */}
           <div>
             <ScrollReveal variant="fadeRight" delay={0}>
@@ -29,7 +29,7 @@ const About = () => {
             </ScrollReveal>
 
             <ScrollReveal variant="fadeUp" delay={0.1}>
-              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 leading-tight">
                 Nicolette
                 <br />
                 <span className="text-gradient">Mashaba</span>
@@ -37,16 +37,16 @@ const About = () => {
             </ScrollReveal>
 
             <ScrollReveal variant="fadeUp" delay={0.2}>
-              <div className="space-y-6 text-muted-foreground leading-relaxed">
-                <p className="text-lg">
+              <div className="space-y-4 sm:space-y-6 text-muted-foreground leading-relaxed">
+                <p className="text-base sm:text-lg">
                   Software Engineer with hands-on experience in full-stack web development, 
                   mobile application development, cloud computing, and artificial intelligence.
                 </p>
-                <p>
+                <p className="text-sm sm:text-base">
                   Microsoft Certified Azure Developer with proven success building production-ready 
                   applications using React, Node.js, .NET Core, Flutter, and Python. 
                 </p>
-                <p>
+                <p className="text-sm sm:text-base">
                   Strong problem-solver with Agile development experience, technical training skills, 
                   and passion for creating scalable solutions.
                 </p>
@@ -55,14 +55,14 @@ const About = () => {
 
             {/* Quick links */}
             <ScrollReveal variant="fadeUp" delay={0.3}>
-              <div className="flex flex-wrap gap-3 mt-8">
-                <Badge variant="outline" className="px-4 py-2 rounded-none font-mono text-xs border-primary/50 text-primary">
+              <div className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:mt-8">
+                <Badge variant="outline" className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-none font-mono text-xs border-primary/50 text-primary">
                   Technical Trainer
                 </Badge>
-                <Badge variant="outline" className="px-4 py-2 rounded-none font-mono text-xs border-accent/50 text-accent">
+                <Badge variant="outline" className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-none font-mono text-xs border-accent/50 text-accent">
                   AI Model Trainer
                 </Badge>
-                <Badge variant="outline" className="px-4 py-2 rounded-none font-mono text-xs">
+                <Badge variant="outline" className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-none font-mono text-xs">
                   Software Engineer
                 </Badge>
               </div>
@@ -70,18 +70,18 @@ const About = () => {
           </div>
 
           {/* Right column - Stats grid */}
-          <StaggerContainer className="grid grid-cols-2 gap-4" staggerDelay={0.15}>
+          <StaggerContainer className="grid grid-cols-2 gap-3 sm:gap-4" staggerDelay={0.15}>
             {stats.map((stat, index) => (
               <StaggerItem key={stat.label}>
-                <div className="group p-8 bg-gradient-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
+                <div className="group p-4 sm:p-6 lg:p-8 bg-gradient-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
                   {/* Hover glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <stat.icon className="w-6 h-6 text-primary mb-4 relative z-10" />
-                  <p className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2 relative z-10">
+                  <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary mb-3 sm:mb-4 relative z-10" />
+                  <p className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-1 sm:mb-2 relative z-10">
                     {stat.value}
                   </p>
-                  <p className="text-sm text-muted-foreground font-mono relative z-10">
+                  <p className="text-xs sm:text-sm text-muted-foreground font-mono relative z-10 leading-tight">
                     {stat.label}
                   </p>
                 </div>
