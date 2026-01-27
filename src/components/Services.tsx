@@ -64,24 +64,24 @@ const Services = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <section id="services" className="py-32 bg-secondary/30 relative">
+    <section id="services" className="py-16 sm:py-24 lg:py-32 bg-secondary/30 relative">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-dots opacity-30" />
       
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
           <div>
             <ScrollReveal variant="fadeRight">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-px bg-primary" />
-                <span className="text-xs font-mono uppercase tracking-[0.3em] text-primary">
+              <div className="flex items-center gap-4 mb-4 sm:mb-6">
+                <div className="w-8 sm:w-12 h-px bg-primary" />
+                <span className="text-xs font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-primary">
                   Services
                 </span>
               </div>
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.1}>
-              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
                 What I Can
                 <br />
                 <span className="text-gradient">Build For You</span>
@@ -89,7 +89,7 @@ const Services = () => {
             </ScrollReveal>
           </div>
           <ScrollReveal variant="fadeLeft" delay={0.2}>
-            <p className="text-muted-foreground max-w-md md:text-right">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-md md:text-right">
               From concept to deployment, I deliver high-quality, scalable solutions. 
               All prices are starting rates and negotiable based on project scope.
             </p>
@@ -97,7 +97,7 @@ const Services = () => {
         </div>
 
         {/* Services list */}
-        <StaggerContainer className="space-y-2" staggerDelay={0.1}>
+        <StaggerContainer className="space-y-2 sm:space-y-3" staggerDelay={0.1}>
           {services.map((service) => (
             <StaggerItem key={service.id}>
               <div
@@ -107,24 +107,24 @@ const Services = () => {
               >
                 <a
                   href="#contact"
-                  className="block p-6 md:p-8 bg-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden"
+                  className="block p-4 sm:p-6 md:p-8 bg-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden"
                 >
                   {/* Hover background */}
                   <div className={`absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-transparent transition-opacity duration-500 ${hoveredId === service.id ? 'opacity-100' : 'opacity-0'}`} />
                   
-                  <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
+                  <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                     {/* Number & Icon */}
-                    <div className="flex items-center gap-4 md:w-24">
-                      <span className="text-sm font-mono text-muted-foreground">{service.id}</span>
-                      <service.icon className={`w-6 h-6 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-muted-foreground'}`} />
+                    <div className="flex items-center gap-3 sm:gap-4 sm:w-24">
+                      <span className="text-xs sm:text-sm font-mono text-muted-foreground">{service.id}</span>
+                      <service.icon className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-muted-foreground'}`} />
                     </div>
 
                     {/* Title & Description */}
                     <div className="flex-1">
-                      <h3 className={`font-display text-xl md:text-2xl font-semibold mb-2 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-foreground'}`}>
+                      <h3 className={`font-display text-lg sm:text-xl md:text-2xl font-semibold mb-1 sm:mb-2 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-foreground'}`}>
                         {service.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2 md:line-clamp-1 max-w-2xl">
+                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 sm:line-clamp-1 max-w-2xl">
                         {service.description}
                       </p>
                     </div>
@@ -139,8 +139,8 @@ const Services = () => {
                     </div>
 
                     {/* Price */}
-                    <div className="md:text-right md:min-w-[140px]">
-                      <p className="font-display font-bold text-lg text-foreground">
+                    <div className="flex items-center justify-between sm:block sm:text-right sm:min-w-[120px] md:min-w-[140px]">
+                      <p className="font-display font-bold text-base sm:text-lg text-foreground">
                         From {service.priceZAR}
                       </p>
                       <p className="text-xs text-muted-foreground font-mono">
@@ -148,8 +148,8 @@ const Services = () => {
                       </p>
                     </div>
 
-                    {/* Arrow */}
-                    <ArrowUpRight className={`w-6 h-6 transition-all duration-300 ${hoveredId === service.id ? 'text-primary translate-x-1 -translate-y-1' : 'text-muted-foreground'}`} />
+                    {/* Arrow - hidden on mobile */}
+                    <ArrowUpRight className={`hidden sm:block w-5 h-5 sm:w-6 sm:h-6 transition-all duration-300 ${hoveredId === service.id ? 'text-primary translate-x-1 -translate-y-1' : 'text-muted-foreground'}`} />
                   </div>
                 </a>
               </div>
@@ -158,11 +158,11 @@ const Services = () => {
         </StaggerContainer>
 
         {/* CTA */}
-        <ScrollReveal variant="fadeUp" delay={0.3} className="mt-16 text-center">
-          <p className="text-muted-foreground mb-6 font-mono text-sm">
+        <ScrollReveal variant="fadeUp" delay={0.3} className="mt-10 sm:mt-16 text-center">
+          <p className="text-muted-foreground mb-4 sm:mb-6 font-mono text-xs sm:text-sm">
             Need something custom? Let's discuss your requirements.
           </p>
-          <Button variant="hero" size="lg" asChild>
+          <Button variant="hero" size="lg" className="w-full sm:w-auto" asChild>
             <a href="#contact">
               Get a Custom Quote
               <ArrowUpRight className="w-5 h-5" />
