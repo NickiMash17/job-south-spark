@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, MapPin, Linkedin, Github, ExternalLink, ArrowUpRight } from "lucide-react";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/motion/ScrollReveal";
+import { motion } from "framer-motion";
 
 const contactMethods = [
   {
@@ -40,71 +42,85 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Left column */}
           <div>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-px bg-primary" />
-              <span className="text-xs font-mono uppercase tracking-[0.3em] text-primary">
-                Get In Touch
-              </span>
-            </div>
+            <ScrollReveal variant="fadeRight">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-px bg-primary" />
+                <span className="text-xs font-mono uppercase tracking-[0.3em] text-primary">
+                  Get In Touch
+                </span>
+              </div>
+            </ScrollReveal>
 
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
-              Let's Build
-              <br />
-              <span className="text-gradient">Something Great</span>
-            </h2>
+            <ScrollReveal variant="fadeUp" delay={0.1}>
+              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
+                Let's Build
+                <br />
+                <span className="text-gradient">Something Great</span>
+              </h2>
+            </ScrollReveal>
 
-            <p className="text-lg text-muted-foreground mb-12 max-w-md">
-              Ready to bring your project to life? I'm available for freelance work 
-              and exciting collaborations. Let's create something amazing together.
-            </p>
+            <ScrollReveal variant="fadeUp" delay={0.2}>
+              <p className="text-lg text-muted-foreground mb-12 max-w-md">
+                Ready to bring your project to life? I'm available for freelance work 
+                and exciting collaborations. Let's create something amazing together.
+              </p>
+            </ScrollReveal>
 
             {/* Contact methods */}
-            <div className="space-y-4">
+            <StaggerContainer className="space-y-4" staggerDelay={0.1}>
               {contactMethods.map((method) => (
-                <div key={method.label} className="group">
-                  {method.href ? (
-                    <a
-                      href={method.href}
-                      target={method.href.startsWith("http") ? "_blank" : undefined}
-                      rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="flex items-center gap-4 p-4 border border-border hover:border-primary bg-card hover:bg-primary/5 transition-all duration-300"
-                    >
-                      <div className="w-12 h-12 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                        <method.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                <StaggerItem key={method.label}>
+                  <div className="group">
+                    {method.href ? (
+                      <motion.a
+                        href={method.href}
+                        target={method.href.startsWith("http") ? "_blank" : undefined}
+                        rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="flex items-center gap-4 p-4 border border-border hover:border-primary bg-card hover:bg-primary/5 transition-all duration-300"
+                        whileHover={{ x: 8 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="w-12 h-12 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                          <method.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1">
+                            {method.label}
+                          </p>
+                          <p className="text-foreground font-medium group-hover:text-primary transition-colors">
+                            {method.value}
+                          </p>
+                        </div>
+                        <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                      </motion.a>
+                    ) : (
+                      <div className="flex items-center gap-4 p-4 border border-border bg-card">
+                        <div className="w-12 h-12 border border-accent/30 flex items-center justify-center">
+                          <method.icon className="w-5 h-5 text-accent" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1">
+                            {method.label}
+                          </p>
+                          <p className="text-foreground font-medium">
+                            {method.value}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1">
-                          {method.label}
-                        </p>
-                        <p className="text-foreground font-medium group-hover:text-primary transition-colors">
-                          {method.value}
-                        </p>
-                      </div>
-                      <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                    </a>
-                  ) : (
-                    <div className="flex items-center gap-4 p-4 border border-border bg-card">
-                      <div className="w-12 h-12 border border-accent/30 flex items-center justify-center">
-                        <method.icon className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1">
-                          {method.label}
-                        </p>
-                        <p className="text-foreground font-medium">
-                          {method.value}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
 
           {/* Right column - CTA Card */}
-          <div className="flex items-center">
-            <div className="w-full p-10 md:p-14 border border-primary/30 bg-gradient-card relative overflow-hidden">
+          <ScrollReveal variant="fadeLeft" delay={0.3} className="flex items-center">
+            <motion.div 
+              className="w-full p-10 md:p-14 border border-primary/30 bg-gradient-card relative overflow-hidden"
+              whileHover={{ borderColor: "hsl(var(--primary))" }}
+              transition={{ duration: 0.3 }}
+            >
               {/* Decorative corner */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/20 to-transparent" />
               <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-accent/30" />
@@ -140,26 +156,30 @@ const Contact = () => {
 
                 {/* Social links */}
                 <div className="flex gap-2 mt-8 pt-8 border-t border-border">
-                  <a
+                  <motion.a
                     href="https://github.com/NickiMash17"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 border border-border hover:border-primary hover:bg-primary/10 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <Github className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
                     href="https://linkedin.com/in/nicolette-mashaba"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 border border-border hover:border-primary hover:bg-primary/10 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <Linkedin className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                  </a>
+                  </motion.a>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
