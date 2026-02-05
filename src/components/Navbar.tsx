@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -50,8 +51,9 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Theme Toggle & CTA Button */}
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
             <Button variant="hero" size="sm" asChild>
               <a href="mailto:nene171408@gmail.com">Hire Me</a>
             </Button>
@@ -83,8 +85,9 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <div className="px-4 pt-4">
-              <Button variant="hero" className="w-full" asChild>
+            <div className="px-4 pt-4 flex items-center gap-3">
+              <ThemeToggle />
+              <Button variant="hero" className="flex-1" asChild>
                 <a href="mailto:nene171408@gmail.com">Hire Me</a>
               </Button>
             </div>
