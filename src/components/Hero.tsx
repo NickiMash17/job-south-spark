@@ -1,148 +1,418 @@
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, ArrowDown, Code2, Sparkles, Download } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+// Particle component for floating effect
+const Particle = ({ delay, duration, x, y, size }: { delay: number; duration: number; x: string; y: string; size: number }) => (
+  <motion.div
+    className="absolute rounded-full bg-primary/20"
+    style={{ left: x, top: y, width: size, height: size }}
+    animate={{
+      y: [0, -30, 0],
+      opacity: [0.2, 0.6, 0.2],
+      scale: [1, 1.2, 1],
+    }}
+    transition={{
+      duration,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
+);
+
+// Generate random particles
+const particles = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  delay: Math.random() * 3,
+  duration: 3 + Math.random() * 3,
+  x: `${Math.random() * 100}%`,
+  y: `${Math.random() * 100}%`,
+  size: 2 + Math.random() * 4,
+}));
 
 const Hero = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <section className="relative min-h-screen bg-background overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-grid opacity-50" />
+      {/* Animated gradient background */}
+      <div className="absolute inset-0">
+        <motion.div
+          className="absolute inset-0 opacity-30"
+          animate={{
+            background: [
+              "radial-gradient(ellipse at 20% 20%, hsl(38 92% 55% / 0.15) 0%, transparent 50%)",
+              "radial-gradient(ellipse at 80% 80%, hsl(38 92% 55% / 0.15) 0%, transparent 50%)",
+              "radial-gradient(ellipse at 50% 50%, hsl(38 92% 55% / 0.15) 0%, transparent 50%)",
+              "radial-gradient(ellipse at 20% 20%, hsl(38 92% 55% / 0.15) 0%, transparent 50%)",
+            ],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute inset-0 opacity-20"
+          animate={{
+            background: [
+              "radial-gradient(ellipse at 80% 20%, hsl(168 80% 45% / 0.1) 0%, transparent 40%)",
+              "radial-gradient(ellipse at 20% 80%, hsl(168 80% 45% / 0.1) 0%, transparent 40%)",
+              "radial-gradient(ellipse at 80% 20%, hsl(168 80% 45% / 0.1) 0%, transparent 40%)",
+            ],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-grid opacity-40" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {particles.map((p) => (
+          <Particle key={p.id} {...p} />
+        ))}
+      </div>
       
-      {/* Floating geometric shapes - hidden on small mobile */}
+      {/* 3D Floating geometric shapes with parallax */}
       <motion.div 
-        className="absolute top-20 right-[15%] w-16 h-16 md:w-32 md:h-32 border border-primary/20 rotate-45 hidden sm:block"
-        animate={{ y: [0, -20, 0], rotate: [45, 50, 45] }}
+        className="absolute top-20 right-[15%] w-16 h-16 md:w-24 md:h-24 border-2 border-primary/30 rotate-45 hidden sm:block"
+        style={{
+          x: mousePosition.x * 0.5,
+          y: mousePosition.y * 0.5,
+        }}
+        animate={{ 
+          y: [0, -20, 0], 
+          rotate: [45, 50, 45],
+          boxShadow: [
+            "0 0 20px hsl(38 92% 55% / 0.2)",
+            "0 0 40px hsl(38 92% 55% / 0.4)",
+            "0 0 20px hsl(38 92% 55% / 0.2)",
+          ]
+        }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
-        className="absolute top-40 right-[10%] w-12 h-12 md:w-16 md:h-16 border border-primary/30 rotate-12 hidden sm:block"
+        className="absolute top-40 right-[10%] w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-primary/20 to-primary/5 rotate-12 hidden sm:block backdrop-blur-sm"
+        style={{
+          x: mousePosition.x * 0.3,
+          y: mousePosition.y * 0.3,
+        }}
         animate={{ y: [0, 15, 0], rotate: [12, 18, 12] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       />
       <motion.div 
-        className="absolute bottom-40 left-[10%] w-16 h-16 md:w-24 md:h-24 border border-accent/20 -rotate-12 hidden md:block"
-        animate={{ y: [0, -15, 0], rotate: [-12, -18, -12] }}
+        className="absolute bottom-40 left-[10%] w-16 h-16 md:w-20 md:h-20 border border-accent/30 -rotate-12 hidden md:block"
+        style={{
+          x: mousePosition.x * -0.4,
+          y: mousePosition.y * -0.4,
+        }}
+        animate={{ 
+          y: [0, -15, 0], 
+          rotate: [-12, -18, -12],
+          borderColor: [
+            "hsl(168 80% 45% / 0.3)",
+            "hsl(168 80% 45% / 0.6)",
+            "hsl(168 80% 45% / 0.3)",
+          ]
+        }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
-      <div className="absolute top-1/3 left-[5%] w-2 h-2 bg-primary rounded-full animate-pulse-slow hidden sm:block" />
-      <div className="absolute top-1/2 right-[20%] w-2 h-2 bg-accent rounded-full animate-pulse-slow delay-200 hidden sm:block" />
+
+      {/* Glowing orbs */}
+      <motion.div 
+        className="absolute top-1/4 left-[8%] w-3 h-3 bg-primary rounded-full hidden sm:block"
+        animate={{ 
+          scale: [1, 1.5, 1],
+          opacity: [0.4, 1, 0.4],
+          boxShadow: [
+            "0 0 10px hsl(38 92% 55% / 0.5)",
+            "0 0 30px hsl(38 92% 55% / 0.8)",
+            "0 0 10px hsl(38 92% 55% / 0.5)",
+          ]
+        }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute top-1/2 right-[25%] w-2 h-2 bg-accent rounded-full hidden sm:block"
+        animate={{ 
+          scale: [1, 1.8, 1],
+          opacity: [0.3, 0.9, 0.3],
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
+      <motion.div 
+        className="absolute bottom-1/3 right-[8%] w-4 h-4 bg-primary/60 rounded-full hidden md:block blur-[1px]"
+        animate={{ 
+          y: [0, -20, 0],
+          opacity: [0.3, 0.7, 0.3],
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
       
-      {/* Large gradient orb */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-primary/5 via-transparent to-transparent blur-3xl" />
+      {/* Large gradient orb with animation */}
+      <motion.div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full blur-3xl pointer-events-none"
+        animate={{
+          background: [
+            "radial-gradient(circle, hsl(38 92% 55% / 0.08) 0%, transparent 60%)",
+            "radial-gradient(circle, hsl(38 92% 55% / 0.12) 0%, transparent 70%)",
+            "radial-gradient(circle, hsl(38 92% 55% / 0.08) 0%, transparent 60%)",
+          ],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 sm:pb-20 lg:pt-40">
-        <div className="max-w-5xl">
-          {/* Status badge */}
-          <motion.div 
-            className="inline-flex items-center gap-2 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-          >
-            <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-            <span className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">
-              Available for projects
-            </span>
-          </motion.div>
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-20 lg:pt-32">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-8">
+          {/* Left content */}
+          <div className="flex-1 max-w-3xl">
+            {/* Status badge */}
+            <motion.div 
+              className="inline-flex items-center gap-2 mb-6 sm:mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+            >
+              <motion.span 
+                className="w-2 h-2 bg-accent rounded-full"
+                animate={{ 
+                  scale: [1, 1.3, 1],
+                  boxShadow: [
+                    "0 0 5px hsl(168 80% 45% / 0.5)",
+                    "0 0 15px hsl(168 80% 45% / 0.8)",
+                    "0 0 5px hsl(168 80% 45% / 0.5)",
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <span className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">
+                Available for projects
+              </span>
+            </motion.div>
 
-          {/* Main heading */}
-          <motion.h1 
-            className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold leading-[0.9] mb-6 sm:mb-8"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
-          >
-            <span className="block text-foreground">I BUILD</span>
-            <span className="block text-gradient glow-text">DIGITAL</span>
-            <span className="block text-foreground">EXPERIENCES</span>
-          </motion.h1>
-
-          {/* Description with asymmetric layout */}
-          <motion.div 
-            className="flex flex-col gap-6 sm:gap-8 mb-8 sm:mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-          >
-            <div>
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Full-Stack Developer & Azure Certified engineer crafting 
-                production-ready applications with modern technologies.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-3">
-              {["React", "Flutter", ".NET", "AI/ML", "Azure"].map((tech, i) => (
+            {/* Main heading - REDUCED SIZE */}
+            <motion.h1 
+              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[0.95] mb-5 sm:mb-6"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
+            >
+              <motion.span 
+                className="block text-foreground"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                I BUILD
+              </motion.span>
+              <motion.span 
+                className="block text-gradient glow-text relative"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                DIGITAL
                 <motion.span
-                  key={tech}
-                  className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border border-border hover:border-primary hover:text-primary transition-colors cursor-default"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+                  className="absolute -right-2 -top-2 text-xs font-mono text-accent"
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
                 >
-                  {tech}
+                  ✦
                 </motion.span>
-              ))}
-            </div>
-          </motion.div>
+              </motion.span>
+              <motion.span 
+                className="block text-foreground"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                EXPERIENCES
+              </motion.span>
+            </motion.h1>
 
-          {/* CTA Buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-10 sm:mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-          >
-            <Button variant="hero" size="lg" className="w-full sm:w-auto" asChild>
-              <a href="#services">
-                <Sparkles className="w-5 h-5" />
-                View Services
-              </a>
-            </Button>
-            <Button variant="heroOutline" size="lg" className="w-full sm:w-auto" asChild>
-              <a href="/Nicolette-Mashaba-CV.pdf" download="Nicolette-Mashaba-CV.pdf">
-                <Download className="w-5 h-5" />
-                Download CV
-              </a>
-            </Button>
-            <Button variant="minimal" size="lg" className="w-full sm:w-auto" asChild>
-              <a href="#contact">
-                Let's Talk
-              </a>
-            </Button>
-          </motion.div>
+            {/* Description */}
+            <motion.div 
+              className="flex flex-col gap-5 sm:gap-6 mb-6 sm:mb-8"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
+            >
+              <div>
+                <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
+                  Full-Stack Developer & Azure Certified engineer crafting 
+                  production-ready applications with modern technologies.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["React", "Flutter", ".NET", "AI/ML", "Azure"].map((tech, i) => (
+                  <motion.span
+                    key={tech}
+                    className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border border-border hover:border-primary hover:text-primary hover:shadow-gold transition-all cursor-default"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
 
-          {/* Social links & location */}
-          <motion.div 
-            className="flex flex-col md:flex-row md:items-center gap-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-          >
-            <div className="flex gap-1">
-              {[
-                { icon: Github, href: "https://github.com/NickiMash17", label: "GitHub" },
-                { icon: Linkedin, href: "https://linkedin.com/in/nicolette-mashaba", label: "LinkedIn" },
-                { icon: Mail, href: "mailto:nene171408@gmail.com", label: "Email" },
-              ].map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="p-3 border border-transparent hover:border-border hover:bg-muted transition-all group"
-                  aria-label={label}
-                >
-                  <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            {/* CTA Buttons */}
+            <motion.div 
+              className="flex flex-col sm:flex-row flex-wrap gap-3 mb-8 sm:mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
+            >
+              <Button variant="hero" size="lg" className="w-full sm:w-auto group" asChild>
+                <a href="#services">
+                  <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  View Services
                 </a>
-              ))}
-            </div>
-            
-            <div className="h-6 w-px bg-border hidden md:block" />
-            
-            <div className="flex items-center gap-3 text-sm text-muted-foreground">
-              <Code2 className="w-4 h-4 text-primary" />
-              <span className="font-mono">Polokwane, South Africa</span>
+              </Button>
+              <Button variant="heroOutline" size="lg" className="w-full sm:w-auto group" asChild>
+                <a href="/Nicolette-Mashaba-CV.pdf" download="Nicolette-Mashaba-CV.pdf">
+                  <Download className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+                  Download CV
+                </a>
+              </Button>
+              <Button variant="minimal" size="lg" className="w-full sm:w-auto" asChild>
+                <a href="#contact">
+                  Let's Talk
+                </a>
+              </Button>
+            </motion.div>
+
+            {/* Social links & location */}
+            <motion.div 
+              className="flex flex-col md:flex-row md:items-center gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+            >
+              <div className="flex gap-1">
+                {[
+                  { icon: Github, href: "https://github.com/NickiMash17", label: "GitHub" },
+                  { icon: Linkedin, href: "https://linkedin.com/in/nicolette-mashaba", label: "LinkedIn" },
+                  { icon: Mail, href: "mailto:nene171408@gmail.com", label: "Email" },
+                ].map(({ icon: Icon, href, label }) => (
+                  <motion.a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="p-3 border border-transparent hover:border-border hover:bg-muted transition-all group"
+                    aria-label={label}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </motion.a>
+                ))}
+              </div>
+              
+              <div className="h-6 w-px bg-border hidden md:block" />
+              
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <Code2 className="w-4 h-4 text-primary" />
+                <span className="font-mono">Polokwane, South Africa</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right side - Profile image placeholder (ready for upload) */}
+          <motion.div
+            className="relative flex-shrink-0 hidden lg:block"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <div className="relative">
+              {/* Glowing ring behind image */}
+              <motion.div
+                className="absolute -inset-4 rounded-full opacity-60"
+                animate={{
+                  background: [
+                    "conic-gradient(from 0deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2), hsl(38 92% 55% / 0.3))",
+                    "conic-gradient(from 180deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2), hsl(38 92% 55% / 0.3))",
+                    "conic-gradient(from 360deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2), hsl(38 92% 55% / 0.3))",
+                  ],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              />
+              
+              {/* Profile image container */}
+              <motion.div
+                className="relative w-64 h-64 xl:w-80 xl:h-80 rounded-full overflow-hidden border-2 border-primary/30 bg-gradient-to-br from-muted to-muted/50"
+                style={{
+                  x: mousePosition.x * -0.2,
+                  y: mousePosition.y * -0.2,
+                }}
+                whileHover={{ scale: 1.02 }}
+              >
+                {/* Placeholder content - will be replaced with actual image */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <motion.div
+                      className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center"
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 20px hsl(38 92% 55% / 0.2)",
+                          "0 0 40px hsl(38 92% 55% / 0.4)",
+                          "0 0 20px hsl(38 92% 55% / 0.2)",
+                        ]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    >
+                      <span className="text-3xl font-display font-bold text-primary">NM</span>
+                    </motion.div>
+                    <p className="text-xs font-mono text-muted-foreground">Your photo here</p>
+                  </div>
+                </div>
+
+                {/* Subtle overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
+              </motion.div>
+
+              {/* Floating decorative elements around image */}
+              <motion.div
+                className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  boxShadow: [
+                    "0 0 10px hsl(38 92% 55% / 0.5)",
+                    "0 0 25px hsl(38 92% 55% / 0.8)",
+                    "0 0 10px hsl(38 92% 55% / 0.5)",
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute -bottom-4 -left-4 w-4 h-4 bg-accent rounded-full"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute top-1/2 -right-8 w-3 h-3 border border-primary/50 rotate-45"
+                animate={{ rotate: [45, 90, 45] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              />
             </div>
           </motion.div>
         </div>
@@ -152,7 +422,7 @@ const Hero = () => {
           className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
         >
           <motion.a 
             href="#about" 
@@ -167,11 +437,16 @@ const Hero = () => {
       </div>
 
       {/* Side text */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block">
+      <motion.div 
+        className="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+      >
         <p className="text-xs font-mono uppercase tracking-[0.4em] text-muted-foreground/50 [writing-mode:vertical-lr] rotate-180">
           Nicolette Mashaba — 2024
         </p>
-      </div>
+      </motion.div>
     </section>
   );
 };
