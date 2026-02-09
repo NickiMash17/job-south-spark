@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Globe, Smartphone, Cloud, Brain, Database, Users } from "lucide-react";
 import { useState } from "react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/motion/ScrollReveal";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -12,6 +13,7 @@ const services = [
     technologies: ["React", "Next.js", "Node.js", ".NET Core", "TypeScript"],
     priceZAR: "R3,500",
     priceUSD: "$190",
+    accent: "primary",
   },
   {
     id: "02",
@@ -21,6 +23,7 @@ const services = [
     technologies: ["Flutter", "React Native", "Dart", "Firebase"],
     priceZAR: "R5,000",
     priceUSD: "$270",
+    accent: "accent",
   },
   {
     id: "03",
@@ -30,6 +33,7 @@ const services = [
     technologies: ["Azure", "Docker", "Terraform", "CI/CD"],
     priceZAR: "R2,500",
     priceUSD: "$135",
+    accent: "primary",
   },
   {
     id: "04",
@@ -39,6 +43,7 @@ const services = [
     technologies: ["OpenAI", "TensorFlow", "NLP", "Python"],
     priceZAR: "R4,000",
     priceUSD: "$215",
+    accent: "accent",
   },
   {
     id: "05",
@@ -48,6 +53,7 @@ const services = [
     technologies: ["REST", "GraphQL", "PostgreSQL", "MongoDB"],
     priceZAR: "R2,000",
     priceUSD: "$110",
+    accent: "primary",
   },
   {
     id: "06",
@@ -57,17 +63,23 @@ const services = [
     technologies: ["Mentorship", "Code Review", "Best Practices"],
     priceZAR: "R800/hr",
     priceUSD: "$45/hr",
+    accent: "accent",
   },
 ];
 
 const Services = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   return (
     <section id="services" className="py-16 sm:py-24 lg:py-32 bg-secondary/30 relative">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-dots opacity-30" />
-      
+      {/* Large decorative number */}
+      <div className="absolute -left-20 top-1/2 -translate-y-1/2 text-[300px] font-display font-bold text-muted/5 select-none pointer-events-none hidden xl:block">
+        06
+      </div>
+
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
@@ -90,69 +102,79 @@ const Services = () => {
           </div>
           <ScrollReveal variant="fadeLeft" delay={0.2}>
             <p className="text-sm sm:text-base text-muted-foreground max-w-md md:text-right">
-              From concept to deployment, I deliver high-quality, scalable solutions. 
+              From concept to deployment, I deliver high-quality, scalable solutions.
               All prices are starting rates and negotiable based on project scope.
             </p>
           </ScrollReveal>
         </div>
 
-        {/* Services list */}
-        <StaggerContainer className="space-y-2 sm:space-y-3" staggerDelay={0.1}>
+        {/* Services - Bento grid layout */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4" staggerDelay={0.1}>
           {services.map((service) => (
             <StaggerItem key={service.id}>
-              <div
-                className="group relative"
+              <motion.a
+                href="#contact"
+                className="group block relative bg-card border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden h-full"
                 onMouseEnter={() => setHoveredId(service.id)}
                 onMouseLeave={() => setHoveredId(null)}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.3 }}
               >
-                <a
-                  href="#contact"
-                  className="block p-4 sm:p-6 md:p-8 bg-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden"
-                >
-                  {/* Hover background */}
-                  <div className={`absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-transparent transition-opacity duration-500 ${hoveredId === service.id ? 'opacity-100' : 'opacity-0'}`} />
-                  
-                  <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-                    {/* Number & Icon */}
-                    <div className="flex items-center gap-3 sm:gap-4 sm:w-24">
-                      <span className="text-xs sm:text-sm font-mono text-muted-foreground">{service.id}</span>
-                      <service.icon className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-muted-foreground'}`} />
-                    </div>
+                {/* Top accent bar */}
+                <motion.div
+                  className={`h-1 w-full ${service.accent === "accent" ? "bg-accent" : "bg-primary"}`}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  style={{ transformOrigin: "left" }}
+                />
 
-                    {/* Title & Description */}
-                    <div className="flex-1">
-                      <h3 className={`font-display text-lg sm:text-xl md:text-2xl font-semibold mb-1 sm:mb-2 transition-colors duration-300 ${hoveredId === service.id ? 'text-primary' : 'text-foreground'}`}>
-                        {service.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 sm:line-clamp-1 max-w-2xl">
-                        {service.description}
-                      </p>
-                    </div>
+                {/* Hover glow */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 transition-opacity duration-500 ${hoveredId === service.id ? 'opacity-100' : 'opacity-0'}`} />
 
-                    {/* Technologies - hidden on mobile */}
-                    <div className="hidden lg:flex flex-wrap gap-2 max-w-xs">
-                      {service.technologies.slice(0, 3).map((tech) => (
-                        <span key={tech} className="text-xs font-mono text-muted-foreground">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                <div className="relative z-10 p-5 sm:p-6 lg:p-8 flex flex-col h-full">
+                  {/* Header row */}
+                  <div className="flex items-start justify-between mb-4">
+                    <motion.div
+                      className={`p-3 border ${service.accent === "accent" ? "border-accent/30 bg-accent/10" : "border-primary/30 bg-primary/10"} transition-all duration-300`}
+                      whileHover={{ rotate: 5 }}
+                    >
+                      <service.icon className={`w-5 h-5 ${service.accent === "accent" ? "text-accent" : "text-primary"}`} />
+                    </motion.div>
+                    <span className="text-xs font-mono text-muted-foreground">{service.id}</span>
+                  </div>
 
-                    {/* Price */}
-                    <div className="flex items-center justify-between sm:block sm:text-right sm:min-w-[120px] md:min-w-[140px]">
+                  {/* Content */}
+                  <h3 className="font-display text-lg sm:text-xl font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-4 flex-1 leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {service.technologies.map((tech) => (
+                      <span key={tech} className="text-[10px] font-mono text-muted-foreground/70 px-2 py-0.5 border border-border/50">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Price + Arrow */}
+                  <div className="flex items-end justify-between pt-4 border-t border-border/50">
+                    <div>
                       <p className="font-display font-bold text-base sm:text-lg text-foreground">
                         From {service.priceZAR}
                       </p>
-                      <p className="text-xs text-muted-foreground font-mono">
+                      <p className="text-[10px] text-muted-foreground font-mono">
                         ≈ {service.priceUSD}
                       </p>
                     </div>
-
-                    {/* Arrow - hidden on mobile */}
-                    <ArrowUpRight className={`hidden sm:block w-5 h-5 sm:w-6 sm:h-6 transition-all duration-300 ${hoveredId === service.id ? 'text-primary translate-x-1 -translate-y-1' : 'text-muted-foreground'}`} />
+                    <ArrowUpRight className={`w-5 h-5 transition-all duration-300 ${hoveredId === service.id ? 'text-primary translate-x-1 -translate-y-1' : 'text-muted-foreground'}`} />
                   </div>
-                </a>
-              </div>
+                </div>
+              </motion.a>
             </StaggerItem>
           ))}
         </StaggerContainer>

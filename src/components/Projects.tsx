@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Github, ExternalLink, Sparkles } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/motion/ScrollReveal";
 import { motion } from "framer-motion";
 
@@ -13,6 +13,7 @@ const projects = [
     github: "https://github.com/NickiMash17/EmpowerAI",
     year: "2024",
     featured: true,
+    gradient: "from-primary/10 via-transparent to-accent/5",
   },
   {
     id: "02",
@@ -22,6 +23,7 @@ const projects = [
     technologies: ["Flutter", "Dart", "Firebase", "BLoC"],
     year: "2025",
     featured: false,
+    gradient: "from-accent/10 via-transparent to-primary/5",
   },
   {
     id: "03",
@@ -31,6 +33,7 @@ const projects = [
     technologies: ["Python", "NLP", "TensorFlow", "OpenAI"],
     year: "2024",
     featured: false,
+    gradient: "from-primary/10 via-transparent to-accent/5",
   },
 ];
 
@@ -39,7 +42,7 @@ const Projects = () => {
     <section id="projects" className="py-16 sm:py-24 lg:py-32 bg-secondary/30 relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-grid opacity-30" />
-      
+
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
@@ -70,83 +73,108 @@ const Projects = () => {
           </ScrollReveal>
         </div>
 
-        {/* Projects grid */}
-        <StaggerContainer className="grid gap-4 sm:gap-6" staggerDelay={0.15}>
-          {projects.map((project, index) => (
-            <StaggerItem key={project.id}>
+        {/* Featured project - large card */}
+        {projects.filter(p => p.featured).map((project) => (
+          <ScrollReveal key={project.id} variant="fadeUp" delay={0.1} className="mb-6">
+            <motion.div
+              className="group relative border border-border bg-card hover:border-primary/50 transition-all duration-500 overflow-hidden"
+              whileHover={{ y: -4 }}
+            >
+              {/* Animated gradient background */}
               <motion.div
-                className={`group relative border border-border bg-card hover:border-primary/50 transition-all duration-500 overflow-hidden ${
-                  project.featured ? 'lg:grid lg:grid-cols-2' : ''
-                }`}
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Background gradient on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="p-5 sm:p-8 md:p-10 relative z-10">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4 sm:mb-6">
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <span className="text-2xl sm:text-4xl md:text-5xl font-display font-bold text-muted/30">
-                        {project.id}
-                      </span>
-                      <span className="text-xs font-mono text-muted-foreground border border-border px-2 py-1">
-                        {project.year}
-                      </span>
-                    </div>
-                    {project.github && (
-                      <motion.a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 sm:p-3 border border-border hover:border-primary hover:text-primary transition-colors"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Github className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </motion.a>
-                    )}
-                  </div>
+                className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
+              />
 
-                  {/* Content */}
-                  <div>
-                    <p className="text-xs sm:text-sm font-mono text-primary mb-1 sm:mb-2">{project.subtitle}</p>
-                    <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4 group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
-                      {project.description}
-                    </p>
-                    
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                      {project.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border border-border text-muted-foreground"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+              <div className="relative z-10 grid lg:grid-cols-[1fr_auto] items-center">
+                <div className="p-6 sm:p-8 md:p-12">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Sparkles className="w-5 h-5 text-primary" />
+                    <span className="text-xs font-mono uppercase tracking-widest text-primary">Featured Project</span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-mono text-accent mb-2">{project.subtitle}</p>
+                  <h3 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-muted-foreground mb-6 max-w-2xl leading-relaxed">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.technologies.map((tech) => (
+                      <span key={tech} className="px-3 py-1.5 text-xs font-mono border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {project.github && (
+                      <Button variant="heroOutline" size="sm" asChild>
+                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                          <Github className="w-4 h-4" />
+                          View Code
+                        </a>
+                      </Button>
+                    )}
+                    <span className="text-xs font-mono text-muted-foreground border border-border px-3 py-1.5">{project.year}</span>
                   </div>
                 </div>
 
-                {/* Featured project extra section */}
-                {project.featured && (
-                  <div className="hidden lg:flex items-center justify-center p-8 md:p-10 border-l border-border relative">
-                    <motion.div 
-                      className="text-center"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 md:mb-4 border-2 border-primary/30 flex items-center justify-center">
-                        <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                      </div>
-                      <p className="text-xs sm:text-sm font-mono text-muted-foreground">View Project</p>
-                    </motion.div>
+                {/* Right side decorative */}
+                <div className="hidden lg:flex items-center justify-center p-12 border-l border-border">
+                  <motion.div
+                    className="relative"
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                  >
+                    <div className="w-32 h-32 border border-primary/30 flex items-center justify-center" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                      <ArrowUpRight className="w-8 h-8 text-primary group-hover:scale-125 transition-transform" />
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </ScrollReveal>
+        ))}
+
+        {/* Other projects - side by side */}
+        <StaggerContainer className="grid md:grid-cols-2 gap-4 sm:gap-6" staggerDelay={0.15}>
+          {projects.filter(p => !p.featured).map((project) => (
+            <StaggerItem key={project.id}>
+              <motion.div
+                className="group relative border border-border bg-card hover:border-primary/50 transition-all duration-500 overflow-hidden h-full"
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Top colored bar */}
+                <div className="h-1 w-full bg-gradient-to-r from-primary via-accent to-primary" />
+
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                <div className="p-5 sm:p-8 relative z-10">
+                  <div className="flex items-start justify-between mb-4 sm:mb-6">
+                    <span className="text-3xl sm:text-5xl font-display font-bold text-muted/20">
+                      {project.id}
+                    </span>
+                    <span className="text-xs font-mono text-muted-foreground border border-border px-2 py-1">
+                      {project.year}
+                    </span>
                   </div>
-                )}
+
+                  <p className="text-xs sm:text-sm font-mono text-accent mb-1 sm:mb-2">{project.subtitle}</p>
+                  <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4 group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    {project.technologies.map((tech) => (
+                      <span key={tech} className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border border-border text-muted-foreground">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </motion.div>
             </StaggerItem>
           ))}
