@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, ArrowDown, Code2, Sparkles, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import profileImage from "@/assets/nicolette-profile.jpg";
 
 // Particle component for floating effect
 const Particle = ({ delay, duration, x, y, size }: { delay: number; duration: number; x: string; y: string; size: number }) => (
@@ -336,83 +337,95 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Right side - Profile image placeholder (ready for upload) */}
+          {/* Right side - Profile image */}
           <motion.div
-            className="relative flex-shrink-0 hidden lg:block"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            className="relative flex-shrink-0 hidden lg:flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <div className="relative">
-              {/* Glowing ring behind image */}
+            <div className="relative" style={{ perspective: "1000px" }}>
+              {/* Animated orbital rings */}
               <motion.div
-                className="absolute -inset-4 rounded-full opacity-60"
-                animate={{
-                  background: [
-                    "conic-gradient(from 0deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2), hsl(38 92% 55% / 0.3))",
-                    "conic-gradient(from 180deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2), hsl(38 92% 55% / 0.3))",
-                    "conic-gradient(from 360deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2), hsl(38 92% 55% / 0.3))",
-                  ],
+                className="absolute -inset-8 rounded-full border border-primary/20"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              >
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-[0_0_15px_hsl(38_92%_55%_/_0.6)]" />
+              </motion.div>
+              <motion.div
+                className="absolute -inset-14 rounded-full border border-accent/10"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              >
+                <div className="absolute bottom-0 right-0 w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_hsl(168_80%_45%_/_0.6)]" />
+              </motion.div>
+
+              {/* Hexagonal glow backdrop */}
+              <motion.div
+                className="absolute -inset-6 opacity-40"
+                style={{
+                  clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
+                  background: "linear-gradient(135deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2))",
                 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                animate={{
+                  opacity: [0.3, 0.5, 0.3],
+                  scale: [1, 1.05, 1],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
               
-              {/* Profile image container */}
+              {/* Profile image with unique shape */}
               <motion.div
-                className="relative w-64 h-64 xl:w-80 xl:h-80 rounded-full overflow-hidden border-2 border-primary/30 bg-gradient-to-br from-muted to-muted/50"
+                className="relative w-72 h-72 xl:w-80 xl:h-80 overflow-hidden border-2 border-primary/40"
                 style={{
+                  clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
                   x: mousePosition.x * -0.2,
                   y: mousePosition.y * -0.2,
                 }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                {/* Placeholder content - will be replaced with actual image */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <motion.div
-                      className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center"
-                      animate={{ 
-                        boxShadow: [
-                          "0 0 20px hsl(38 92% 55% / 0.2)",
-                          "0 0 40px hsl(38 92% 55% / 0.4)",
-                          "0 0 20px hsl(38 92% 55% / 0.2)",
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    >
-                      <span className="text-3xl font-display font-bold text-primary">NM</span>
-                    </motion.div>
-                    <p className="text-xs font-mono text-muted-foreground">Your photo here</p>
-                  </div>
-                </div>
-
-                {/* Subtle overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
+                <img
+                  src={profileImage}
+                  alt="Nicolette Mashaba - Full-Stack Developer"
+                  className="w-full h-full object-cover object-top scale-110"
+                />
+                {/* Subtle gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-primary/10 pointer-events-none" />
               </motion.div>
 
-              {/* Floating decorative elements around image */}
+              {/* Corner accents */}
               <motion.div
-                className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  boxShadow: [
-                    "0 0 10px hsl(38 92% 55% / 0.5)",
-                    "0 0 25px hsl(38 92% 55% / 0.8)",
-                    "0 0 10px hsl(38 92% 55% / 0.5)",
-                  ]
-                }}
+                className="absolute -top-3 -right-3 w-8 h-8 border-t-2 border-r-2 border-primary"
+                animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
               <motion.div
-                className="absolute -bottom-4 -left-4 w-4 h-4 bg-accent rounded-full"
+                className="absolute -bottom-3 -left-3 w-8 h-8 border-b-2 border-l-2 border-primary"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+              />
+
+              {/* Floating tech badge */}
+              <motion.div
+                className="absolute -right-12 top-1/3 px-3 py-1.5 bg-card/80 backdrop-blur-md border border-border text-xs font-mono text-primary"
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
+              >
+                Azure Certified ✦
+              </motion.div>
+
+              {/* Floating dot grid */}
               <motion.div
-                className="absolute top-1/2 -right-8 w-3 h-3 border border-primary/50 rotate-45"
-                animate={{ rotate: [45, 90, 45] }}
+                className="absolute -left-10 bottom-1/4 grid grid-cols-3 gap-1.5"
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
                 transition={{ duration: 4, repeat: Infinity }}
-              />
+              >
+                {Array.from({ length: 9 }).map((_, i) => (
+                  <div key={i} className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                ))}
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -444,7 +457,7 @@ const Hero = () => {
         transition={{ delay: 1.5 }}
       >
         <p className="text-xs font-mono uppercase tracking-[0.4em] text-muted-foreground/50 [writing-mode:vertical-lr] rotate-180">
-          Nicolette Mashaba — 2024
+          Nicolette Mashaba — 2026
         </p>
       </motion.div>
     </section>
