@@ -24,7 +24,7 @@ const Particle = ({ delay, duration, x, y, size }: { delay: number; duration: nu
 );
 
 // Generate random particles
-const particles = Array.from({ length: 20 }, (_, i) => ({
+const particles = Array.from({ length: 15 }, (_, i) => ({
   id: i,
   delay: Math.random() * 3,
   duration: 3 + Math.random() * 3,
@@ -48,7 +48,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-background overflow-hidden">
+    <section className="relative min-h-screen bg-background overflow-hidden flex items-center">
       {/* Animated gradient background */}
       <div className="absolute inset-0">
         <motion.div
@@ -63,21 +63,10 @@ const Hero = () => {
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
         />
-        <motion.div
-          className="absolute inset-0 opacity-20"
-          animate={{
-            background: [
-              "radial-gradient(ellipse at 80% 20%, hsl(168 80% 45% / 0.1) 0%, transparent 40%)",
-              "radial-gradient(ellipse at 20% 80%, hsl(168 80% 45% / 0.1) 0%, transparent 40%)",
-              "radial-gradient(ellipse at 80% 20%, hsl(168 80% 45% / 0.1) 0%, transparent 40%)",
-            ],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-        />
       </div>
 
       {/* Grid pattern */}
-      <div className="absolute inset-0 bg-grid opacity-40" />
+      <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
 
       {/* Floating particles */}
@@ -87,85 +76,23 @@ const Hero = () => {
         ))}
       </div>
       
-      {/* 3D Floating geometric shapes with parallax */}
+      {/* 3D Floating geometric shapes - hidden on mobile */}
       <motion.div 
-        className="absolute top-20 right-[15%] w-16 h-16 md:w-24 md:h-24 border-2 border-primary/30 rotate-45 hidden sm:block"
-        style={{
-          x: mousePosition.x * 0.5,
-          y: mousePosition.y * 0.5,
-        }}
-        animate={{ 
-          y: [0, -20, 0], 
-          rotate: [45, 50, 45],
-          boxShadow: [
-            "0 0 20px hsl(38 92% 55% / 0.2)",
-            "0 0 40px hsl(38 92% 55% / 0.4)",
-            "0 0 20px hsl(38 92% 55% / 0.2)",
-          ]
-        }}
+        className="absolute top-20 right-[15%] w-24 h-24 border-2 border-primary/30 rotate-45 hidden md:block"
+        style={{ x: mousePosition.x * 0.5, y: mousePosition.y * 0.5 }}
+        animate={{ y: [0, -20, 0], rotate: [45, 50, 45] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
-        className="absolute top-40 right-[10%] w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-primary/20 to-primary/5 rotate-12 hidden sm:block backdrop-blur-sm"
-        style={{
-          x: mousePosition.x * 0.3,
-          y: mousePosition.y * 0.3,
-        }}
-        animate={{ y: [0, 15, 0], rotate: [12, 18, 12] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-      />
-      <motion.div 
-        className="absolute bottom-40 left-[10%] w-16 h-16 md:w-20 md:h-20 border border-accent/30 -rotate-12 hidden md:block"
-        style={{
-          x: mousePosition.x * -0.4,
-          y: mousePosition.y * -0.4,
-        }}
-        animate={{ 
-          y: [0, -15, 0], 
-          rotate: [-12, -18, -12],
-          borderColor: [
-            "hsl(168 80% 45% / 0.3)",
-            "hsl(168 80% 45% / 0.6)",
-            "hsl(168 80% 45% / 0.3)",
-          ]
-        }}
+        className="absolute bottom-40 left-[10%] w-20 h-20 border border-accent/30 -rotate-12 hidden lg:block"
+        style={{ x: mousePosition.x * -0.4, y: mousePosition.y * -0.4 }}
+        animate={{ y: [0, -15, 0], rotate: [-12, -18, -12] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
 
-      {/* Glowing orbs */}
+      {/* Large gradient orb */}
       <motion.div 
-        className="absolute top-1/4 left-[8%] w-3 h-3 bg-primary rounded-full hidden sm:block"
-        animate={{ 
-          scale: [1, 1.5, 1],
-          opacity: [0.4, 1, 0.4],
-          boxShadow: [
-            "0 0 10px hsl(38 92% 55% / 0.5)",
-            "0 0 30px hsl(38 92% 55% / 0.8)",
-            "0 0 10px hsl(38 92% 55% / 0.5)",
-          ]
-        }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div 
-        className="absolute top-1/2 right-[25%] w-2 h-2 bg-accent rounded-full hidden sm:block"
-        animate={{ 
-          scale: [1, 1.8, 1],
-          opacity: [0.3, 0.9, 0.3],
-        }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      />
-      <motion.div 
-        className="absolute bottom-1/3 right-[8%] w-4 h-4 bg-primary/60 rounded-full hidden md:block blur-[1px]"
-        animate={{ 
-          y: [0, -20, 0],
-          opacity: [0.3, 0.7, 0.3],
-        }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      />
-      
-      {/* Large gradient orb with animation */}
-      <motion.div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] rounded-full blur-3xl pointer-events-none"
         animate={{
           background: [
             "radial-gradient(circle, hsl(38 92% 55% / 0.08) 0%, transparent 60%)",
@@ -177,13 +104,53 @@ const Hero = () => {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-20 lg:pt-32">
+      <div className="container relative z-10 mx-auto px-5 sm:px-6 pt-24 pb-12 sm:pt-28 sm:pb-20 lg:pt-32">
+        {/* Mobile profile image - shown above content on small screens */}
+        <motion.div
+          className="flex justify-center mb-8 lg:hidden"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="relative">
+            {/* Hexagonal glow */}
+            <motion.div
+              className="absolute -inset-3 opacity-40"
+              style={{
+                clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
+                background: "linear-gradient(135deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2))",
+              }}
+              animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.05, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div
+              className="w-36 h-36 sm:w-44 sm:h-44 overflow-hidden border-2 border-primary/40"
+              style={{ clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)" }}
+            >
+              <img
+                src={profileImage}
+                alt="Nicolette Mashaba"
+                className="w-full h-full object-cover object-top scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-primary/10 pointer-events-none" />
+            </div>
+            {/* Orbital dot */}
+            <motion.div
+              className="absolute -inset-5 rounded-full"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_hsl(38_92%_55%_/_0.6)]" />
+            </motion.div>
+          </div>
+        </motion.div>
+
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-8">
           {/* Left content */}
-          <div className="flex-1 max-w-3xl">
+          <div className="flex-1 max-w-3xl text-center lg:text-left">
             {/* Status badge */}
             <motion.div 
-              className="inline-flex items-center gap-2 mb-6 sm:mb-8"
+              className="inline-flex items-center gap-2 mb-5 sm:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
@@ -200,14 +167,14 @@ const Hero = () => {
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-muted-foreground">
                 Available for projects
               </span>
             </motion.div>
 
-            {/* Main heading - REDUCED SIZE */}
+            {/* Main heading */}
             <motion.h1 
-              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[0.95] mb-5 sm:mb-6"
+              className="font-display text-[2.5rem] leading-[0.9] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-extrabold mb-4 sm:mb-6"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
@@ -221,19 +188,12 @@ const Hero = () => {
                 I BUILD
               </motion.span>
               <motion.span 
-                className="block text-gradient glow-text relative"
+                className="block text-gradient glow-text"
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
                 DIGITAL
-                <motion.span
-                  className="absolute -right-2 -top-2 text-xs font-mono text-accent"
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                >
-                  ✦
-                </motion.span>
               </motion.span>
               <motion.span 
                 className="block text-foreground"
@@ -247,22 +207,20 @@ const Hero = () => {
 
             {/* Description */}
             <motion.div 
-              className="flex flex-col gap-5 sm:gap-6 mb-6 sm:mb-8"
+              className="flex flex-col gap-4 sm:gap-6 mb-6 sm:mb-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
             >
-              <div>
-                <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
-                  Full-Stack Developer & Azure Certified engineer crafting 
-                  production-ready applications with modern technologies.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
+                Full-Stack Developer & Azure Certified engineer crafting 
+                production-ready applications with modern technologies.
+              </p>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2">
                 {["React", "Flutter", ".NET", "AI/ML", "Azure"].map((tech, i) => (
                   <motion.span
                     key={tech}
-                    className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border border-border hover:border-primary hover:text-primary hover:shadow-gold transition-all cursor-default"
+                    className="px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-mono border border-border hover:border-primary hover:text-primary transition-all cursor-default"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     whileHover={{ scale: 1.05, y: -2 }}
@@ -276,7 +234,7 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <motion.div 
-              className="flex flex-col sm:flex-row flex-wrap gap-3 mb-8 sm:mb-10"
+              className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3 mb-8 sm:mb-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
@@ -302,7 +260,7 @@ const Hero = () => {
 
             {/* Social links & location */}
             <motion.div 
-              className="flex flex-col md:flex-row md:items-center gap-6"
+              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.9 }}
@@ -328,16 +286,16 @@ const Hero = () => {
                 ))}
               </div>
               
-              <div className="h-6 w-px bg-border hidden md:block" />
+              <div className="h-px w-12 sm:h-6 sm:w-px bg-border" />
               
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Code2 className="w-4 h-4 text-primary" />
-                <span className="font-mono">Polokwane, South Africa</span>
+                <span className="font-mono text-xs sm:text-sm">Polokwane, South Africa</span>
               </div>
             </motion.div>
           </div>
 
-          {/* Right side - Profile image */}
+          {/* Right side - Desktop Profile image */}
           <motion.div
             className="relative flex-shrink-0 hidden lg:flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
@@ -368,14 +326,11 @@ const Hero = () => {
                   clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
                   background: "linear-gradient(135deg, hsl(38 92% 55% / 0.3), hsl(168 80% 45% / 0.2))",
                 }}
-                animate={{
-                  opacity: [0.3, 0.5, 0.3],
-                  scale: [1, 1.05, 1],
-                }}
+                animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.05, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
               
-              {/* Profile image with unique shape */}
+              {/* Profile image with hexagonal shape */}
               <motion.div
                 className="relative w-72 h-72 xl:w-80 xl:h-80 overflow-hidden border-2 border-primary/40"
                 style={{
@@ -391,7 +346,6 @@ const Hero = () => {
                   alt="Nicolette Mashaba - Full-Stack Developer"
                   className="w-full h-full object-cover object-top scale-110"
                 />
-                {/* Subtle gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-primary/10 pointer-events-none" />
               </motion.div>
 
@@ -432,7 +386,7 @@ const Hero = () => {
 
         {/* Scroll indicator */}
         <motion.div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:block"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
@@ -443,7 +397,7 @@ const Hero = () => {
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span className="text-xs font-mono uppercase tracking-widest">Scroll</span>
+            <span className="text-[10px] font-mono uppercase tracking-widest">Scroll</span>
             <ArrowDown className="w-4 h-4" />
           </motion.a>
         </motion.div>
