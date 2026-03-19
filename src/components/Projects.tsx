@@ -79,6 +79,7 @@ const Projects = () => {
             <motion.div
               className="group relative border border-border bg-card hover:border-primary/50 transition-all duration-500 overflow-hidden"
               whileHover={{ y: -4 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
             >
               {/* Animated gradient background */}
               <motion.div
