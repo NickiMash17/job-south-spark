@@ -118,7 +118,7 @@ const Services = () => {
                 onMouseEnter={() => setHoveredId(service.id)}
                 onMouseLeave={() => setHoveredId(null)}
                 whileHover={{ y: -6 }}
-                transition={{ duration: 0.3 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 {/* Top accent bar */}
                 <motion.div

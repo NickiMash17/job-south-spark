@@ -49,14 +49,15 @@ const Navbar = () => {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="px-4 py-2 text-sm font-mono text-muted-foreground hover:text-primary transition-colors"
+                className="relative px-4 py-2 text-sm font-mono text-muted-foreground hover:text-primary transition-colors duration-200 group"
               >
                 {link.label}
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-primary group-hover:w-3/4 transition-all duration-300" />
               </a>
             ))}
           </div>

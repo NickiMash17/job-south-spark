@@ -143,7 +143,7 @@ const Projects = () => {
               <motion.div
                 className="group relative border border-border bg-card hover:border-primary/50 transition-all duration-500 overflow-hidden h-full"
                 whileHover={{ y: -6 }}
-                transition={{ duration: 0.3 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 {/* Top colored bar */}
                 <div className="h-1 w-full bg-gradient-to-r from-primary via-accent to-primary" />

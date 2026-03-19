@@ -118,8 +118,8 @@ const Contact = () => {
           <ScrollReveal variant="fadeLeft" delay={0.3} className="flex items-center">
             <motion.div 
               className="w-full p-6 sm:p-10 md:p-14 border border-primary/30 bg-gradient-card relative overflow-hidden"
-              whileHover={{ borderColor: "hsl(var(--primary))" }}
-              transition={{ duration: 0.3 }}
+              whileHover={{ borderColor: "hsl(var(--primary))", scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
             >
               {/* Decorative corner */}
               <div className="absolute top-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-bl from-primary/20 to-transparent" />

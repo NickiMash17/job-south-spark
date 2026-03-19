@@ -9,7 +9,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-8 sm:py-12 bg-card border-t border-border relative">
+    <footer className="py-8 sm:py-12 bg-card/50 backdrop-blur-sm border-t border-border relative">
       <div className="container mx-auto px-5 sm:px-6">
         <div className="flex flex-col gap-6 items-center text-center md:flex-row md:justify-between md:text-left">
           {/* Logo & Copyright */}
