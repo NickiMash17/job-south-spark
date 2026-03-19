@@ -125,8 +125,9 @@ const About = () => {
             {stats.map((stat) => (
               <StaggerItem key={stat.label}>
                 <motion.div
-                  className="group p-4 sm:p-6 lg:p-8 bg-gradient-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden"
-                  whileHover={{ y: -4 }}
+                  className="group p-4 sm:p-6 lg:p-8 bg-gradient-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden cursor-default"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <stat.icon className="w-4 h-4 sm:w-6 sm:h-6 text-primary mb-2 sm:mb-4 relative z-10" />

@@ -116,7 +116,7 @@
 
 @layer base {
   * {
-    @apply border-border transition-colors duration-300;
+    @apply border-border;
   }
 
   html {
@@ -130,6 +130,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Syne', sans-serif;
+    letter-spacing: -0.02em;
   }
 
   ::selection {
@@ -300,23 +301,23 @@
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(240 10% 8%);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsl(240 8% 25%);
-  border-radius: 4px;
+  border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(38 92% 55%);
 }
 
-/* Hide scrollbar utility for horizontal scroll containers */
+/* Hide scrollbar utility */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -324,6 +325,12 @@
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid hsl(38 92% 55%);
+  outline-offset: 2px;
 }
 
 /* Safe area for mobile devices */
