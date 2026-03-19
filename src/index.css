@@ -116,7 +116,7 @@
 
 @layer base {
   * {
-    @apply border-border transition-colors duration-300;
+    @apply border-border;
   }
 
   html {
@@ -130,6 +130,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Syne', sans-serif;
+    letter-spacing: -0.02em;
   }
 
   ::selection {
