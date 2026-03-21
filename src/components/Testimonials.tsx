@@ -75,9 +75,9 @@ const Testimonials = () => {
           {testimonials.map((testimonial) => (
             <StaggerItem key={testimonial.id}>
               <motion.div
-                className="group relative h-full bg-gradient-card border border-border hover:border-primary/40 transition-all duration-500 overflow-hidden"
+                className="group relative h-full bg-gradient-card border border-border hover:border-primary/40 transition-all duration-500 overflow-hidden cursor-default"
                 whileHover={{ y: -4 }}
-                transition={{ duration: 0.3 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 {/* Top accent bar */}
                 <motion.div

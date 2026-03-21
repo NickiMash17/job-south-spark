@@ -125,9 +125,9 @@ const Skills = () => {
                 <motion.button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`px-4 sm:px-6 py-3 sm:py-4 text-left border transition-all duration-300 whitespace-nowrap flex-shrink-0 relative overflow-hidden ${
+                  className={`px-4 sm:px-6 py-3 sm:py-4 text-left border transition-all duration-200 whitespace-nowrap flex-shrink-0 relative overflow-hidden ${
                     activeCategory === category.id
-                      ? "border-primary bg-primary/10 text-primary"
+                      ? "border-primary bg-primary/10 text-primary shadow-[inset_0_0_20px_hsl(38_92%_55%_/_0.05)]"
                       : "border-border hover:border-muted-foreground/50 text-muted-foreground hover:text-foreground"
                   }`}
                   whileHover={{ x: 4 }}

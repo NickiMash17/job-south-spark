@@ -133,7 +133,7 @@ const About = () => {
             {stats.map((stat) => (
               <StaggerItem key={stat.label}>
                 <motion.div
-                  className="group relative overflow-hidden border border-border bg-gradient-card p-4 transition-all duration-500 hover:border-primary/50 sm:p-6 lg:p-8"
+                  className="group p-4 sm:p-6 lg:p-8 bg-gradient-card border border-border hover:border-primary/50 transition-all duration-500 relative overflow-hidden"
                   whileHover={{ y: -4 }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
